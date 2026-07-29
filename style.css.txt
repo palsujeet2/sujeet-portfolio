@@ -1,0 +1,314 @@
+// =============================
+// Typing Animation
+// =============================
+
+const roles = [
+  "Lead Talent Acquisition",
+  "SaaS Talent Specialist",
+  "FinTech Recruiter",
+  "Cloud Hiring Expert",
+  "AI & Data Talent Partner"
+];
+
+const typing = document.getElementById("typing");
+
+let roleIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+function type() {
+
+    const word = roles[roleIndex];
+
+    if (!deleting) {
+
+        typing.textContent = word.substring(0, charIndex++);
+        
+        if (charIndex > word.length) {
+
+            deleting = true;
+
+            setTimeout(type, 1400);
+
+            return;
+
+        }
+
+    } else {
+
+        typing.textContent = word.substring(0, --charIndex);
+
+        if (charIndex === 0) {
+
+            deleting = false;
+
+            roleIndex = (roleIndex + 1) % roles.length;
+
+        }
+
+    }
+
+    setTimeout(type, deleting ? 40 : 80);
+}
+
+type();
+
+
+// =============================
+// Counter Animation
+// =============================
+
+const counters = document.querySelectorAll(".counter");
+
+counters.forEach(counter => {
+
+    const target = +counter.dataset.target;
+
+    let value = 0;
+
+    const update = () => {
+
+        const increment = Math.ceil(target / 80);
+
+        value += increment;
+
+        if (value > target) value = target;
+
+        counter.innerText = value + "+";
+
+        if (value < target) {
+
+            requestAnimationFrame(update);
+
+        }
+
+    };
+
+    update();
+
+});
+
+
+// =============================
+// Scroll Reveal
+// =============================
+
+const observer = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+}, {
+
+    threshold: 0.15
+
+});
+
+document.querySelectorAll(".fade-up").forEach(el => {
+
+    observer.observe(el);
+
+});
+
+
+// =============================
+// Header Scroll Effect
+// =============================
+
+const header = document.querySelector("header");
+
+window.addEventListener("scroll", () => {
+
+    if (window.scrollY > 40) {
+
+        header.style.background = "rgba(15,23,42,.95)";
+
+    } else {
+
+        header.style.background = "rgba(15,23,42,.70)";
+
+    }
+
+});
+
+/* ==========================
+ABOUT
+========================== */
+
+.about-grid{
+
+display:grid;
+
+grid-template-columns:1.2fr 1fr;
+
+gap:50px;
+
+margin-top:60px;
+
+}
+
+.section-heading{
+
+margin-bottom:40px;
+
+}
+
+.section-tag{
+
+color:#38bdf8;
+
+font-weight:700;
+
+letter-spacing:2px;
+
+margin-bottom:10px;
+
+}
+
+.about-card{
+
+padding:40px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:24px;
+
+backdrop-filter:blur(20px);
+
+}
+
+.about-card h3{
+
+font-size:32px;
+
+margin-bottom:20px;
+
+}
+
+.about-card p{
+
+color:#cbd5e1;
+
+line-height:1.8;
+
+margin-bottom:18px;
+
+}
+
+.highlight{
+
+display:flex;
+
+gap:18px;
+
+padding:24px;
+
+margin-bottom:20px;
+
+background:rgba(255,255,255,.04);
+
+border-radius:18px;
+
+transition:.35s;
+
+}
+
+.highlight:hover{
+
+transform:translateX(10px);
+
+border-left:4px solid #38bdf8;
+
+}
+
+.highlight span{
+
+font-size:30px;
+
+}
+
+.highlight h4{
+
+margin-bottom:8px;
+
+}
+
+/* ==========================
+EXPERTISE
+========================== */
+
+.expertise-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:25px;
+
+margin-top:60px;
+
+}
+
+.expertise-card{
+
+padding:35px;
+
+background:rgba(255,255,255,.05);
+
+border-radius:24px;
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.35s;
+
+}
+
+.expertise-card:hover{
+
+transform:translateY(-10px);
+
+border-color:#38bdf8;
+
+}
+
+.icon{
+
+font-size:42px;
+
+margin-bottom:20px;
+
+}
+
+.expertise-card h3{
+
+margin-bottom:15px;
+
+}
+
+.expertise-card p{
+
+color:#94a3b8;
+
+line-height:1.7;
+
+}
+
+@media(max-width:900px){
+
+.about-grid,
+.expertise-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
